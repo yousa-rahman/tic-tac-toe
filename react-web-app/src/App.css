@@ -1,0 +1,17 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 90px 0 20px 0; /* Added top padding to account for fixed navbar */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 90px 16px 16px 16px; /* Adjusted padding for mobile */
+  }
+} 
