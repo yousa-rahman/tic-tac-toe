@@ -141,12 +141,6 @@ const Register = ({ navigation }) => {
                 <Text style={styles.linkText}>Sign In</Text>
               </TouchableOpacity>
             </View>
-
-            <View style={styles.demoInfo}>
-              <Text style={styles.demoTitle}>ℹ️ Backend Required:</Text>
-              <Text style={styles.demoText}>Make sure your Node.js backend is running on localhost:3001</Text>
-              <Text style={styles.demoText}>The backend should have the auth endpoints configured</Text>
-            </View>
           </View>
         </View>
       </KeyboardAvoidingView>
