@@ -5,7 +5,10 @@ let db;
 
 function initializeDatabase() {
   return new Promise((resolve, reject) => {
-    const dbPath = path.join(__dirname, '../../data/tic-tac-toe.db');
+    // Use test database for tests
+    const dbPath = process.env.NODE_ENV === 'test' 
+      ? path.join(__dirname, '../../data/test.db')
+      : path.join(__dirname, '../../data/tic-tac-toe.db');
     
     db = new sqlite3.Database(dbPath, (err) => {
       if (err) {
@@ -14,7 +17,7 @@ function initializeDatabase() {
         return;
       }
       
-      console.log('Connected to SQLite database');
+      console.log(`Connected to SQLite database: ${dbPath}`);
       createTables()
         .then(resolve)
         .catch(reject);
@@ -111,21 +114,16 @@ function getDatabase() {
 }
 
 function closeDatabase() {
-  return new Promise((resolve, reject) => {
-    if (db) {
-      db.close((err) => {
-        if (err) {
-          console.error('Error closing database:', err);
-          reject(err);
-        } else {
-          console.log('Database connection closed');
-          resolve();
-        }
-      });
-    } else {
-      resolve();
-    }
-  });
+  if (db) {
+    db.close((err) => {
+      if (err) {
+        console.error('Error closing database:', err.message);
+      } else {
+        // Removed: console.log('Database connection closed');
+      }
+    });
+    db = null;
+  }
 }
 
 // Helper function to ensure statistics record exists for a user

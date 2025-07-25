@@ -15,6 +15,7 @@ import Game from './pages/Game';
 import Statistics from './pages/Statistics';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoadingSpinner from './components/LoadingSpinner';
+import ErrorBoundary from './components/ErrorBoundary';
 
 import './App.css';
 
@@ -52,33 +53,35 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Navbar />
-      <main className="main-content">
-        <Routes>
-          <Route path="/login" element={
-            isAuthenticated ? <Navigate to="/game" replace /> : <Login />
-          } />
-          <Route path="/register" element={
-            isAuthenticated ? <Navigate to="/game" replace /> : <Register />
-          } />
-          <Route path="/game" element={
-            <ProtectedRoute>
-              <Game />
-            </ProtectedRoute>
-          } />
-          <Route path="/statistics" element={
-            <ProtectedRoute>
-              <Statistics />
-            </ProtectedRoute>
-          } />
-          <Route path="/" element={
-            isAuthenticated ? <Navigate to="/game" replace /> : <Navigate to="/login" replace />
-          } />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+        <Navbar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/login" element={
+              isAuthenticated ? <Navigate to="/game" replace /> : <Login />
+            } />
+            <Route path="/register" element={
+              isAuthenticated ? <Navigate to="/game" replace /> : <Register />
+            } />
+            <Route path="/game" element={
+              <ProtectedRoute>
+                <Game />
+              </ProtectedRoute>
+            } />
+            <Route path="/statistics" element={
+              <ProtectedRoute>
+                <Statistics />
+              </ProtectedRoute>
+            } />
+            <Route path="/" element={
+              isAuthenticated ? <Navigate to="/game" replace /> : <Navigate to="/login" replace />
+            } />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </div>
+    </ErrorBoundary>
   );
 }
 
